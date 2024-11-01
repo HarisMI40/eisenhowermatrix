@@ -14,3 +14,8 @@ export type TaskFormProps = {
   onImportanceChange: (value: 'important' | 'not-important') => void
   onSubmit: (e: React.FormEvent) => void
 }
+
+export type Quadrant = {
+  urgency: 'urgent' | 'not-urgent'
+  importance: 'important' | 'not-important'
+}

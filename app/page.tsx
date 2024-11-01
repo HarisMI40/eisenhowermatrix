@@ -1,16 +1,18 @@
 'use client'
 // import Image from "next/image";
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Matrix from '@/app/components/matrix'
-import TaskForm from '@/app/components/form'
-import { Task } from '@/lib/types'
+import { Quadrant, Task } from '@/lib/types'
 
 
 export default function Home() {
 
   const [tasks, setTasks] = useState<Task[]>([])
   const [editingTask, setEditingTask] = useState<Task | null>(null)
+  const [addingToQuadrant, setAddingToQuadrant] = useState<Quadrant | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
 
   useEffect(() => {
     const dataTodo = localStorage.getItem("todoList");
@@ -19,10 +21,25 @@ export default function Home() {
     }
   }, []);
 
-  const addTask = (task: Omit<Task, 'id'>) => {
-      const newData = [...tasks,  { ...task, id: Date.now() }];
-      setTasks(newData)
-      localStorage.setItem("todoList", JSON.stringify(newData));
+  useEffect(() => {
+    if (addingToQuadrant && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [addingToQuadrant])
+
+
+
+  const addTask = (text: string, quadrant: Quadrant) => {
+    const newTask: Task = {
+      id: Date.now(),
+      text,
+      urgency: quadrant.urgency,
+      importance: quadrant.importance
+    }
+    setTasks([...tasks, newTask])
+    setAddingToQuadrant(null)
+
+    localStorage.setItem("todoList", JSON.stringify([...tasks, newTask]));
   }
 
   const updateTask = (updatedTask: Task) => {
@@ -31,16 +48,15 @@ export default function Home() {
   }
 
   const removeTask = (id: number) => {
-    setTasks(tasks.filter(task => task.id !== id))
+    const newData = tasks.filter(task => task.id !== id)
+    setTasks(newData)
+    localStorage.setItem("todoList", JSON.stringify(newData));
   }
 
 
   return (
    <>
-      {/* <TaskForm
-        onTaskAdd={addTask}
-      /> */}
-      <Matrix tasks={tasks} updateTask={updateTask} removeTask={removeTask} />
+      <Matrix tasks={tasks} updateTask={updateTask} removeTask={removeTask} addTask={addTask} addingToQuadrant={addingToQuadrant} setAddingToQuadrant={setAddingToQuadrant} inputRef={inputRef} />
     </>
   );
 }

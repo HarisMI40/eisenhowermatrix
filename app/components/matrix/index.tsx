@@ -2,9 +2,9 @@ import React from 'react'
 
 import MatrixQuadrant from './MatrixQuadrant'
 import MatrixHeaders from './MatrixHeaders'
-import { Task } from '@/lib/types'
+import { Quadrant, Task } from '@/lib/types'
 
-const Index = ({tasks, updateTask, removeTask}: {tasks: Task[], updateTask: (updatedTask: Task) => void, removeTask: (id: number) => void}) => {
+const Index = ({tasks, updateTask, removeTask, addTask, addingToQuadrant, setAddingToQuadrant, inputRef}: {tasks: Task[], updateTask: (updatedTask: Task) => void, removeTask: (id: number) => void, addTask: (text: string, quadrant: Quadrant) => void, addingToQuadrant: Quadrant | null, setAddingToQuadrant: (quadrant: Quadrant | null) => void, inputRef: React.RefObject<HTMLInputElement>}) => {
   return (
     <div className="w-full md:w-6/12">
       <h1 className="text-3xl font-serif text-center mb-8">The Eisenhower Matrix</h1>
@@ -22,6 +22,10 @@ const Index = ({tasks, updateTask, removeTask}: {tasks: Task[], updateTask: (upd
             importance="important"
             updateTask={updateTask}
             removeTask={removeTask}
+            addTask={addTask}
+            addingToQuadrant={addingToQuadrant}
+            setAddingToQuadrant={setAddingToQuadrant}
+            inputRef={inputRef}
           />
           <MatrixQuadrant
             title="Schedule"
@@ -32,6 +36,10 @@ const Index = ({tasks, updateTask, removeTask}: {tasks: Task[], updateTask: (upd
             importance="important"
             updateTask={updateTask}
             removeTask={removeTask}
+            addTask={addTask}
+            addingToQuadrant={addingToQuadrant}
+            setAddingToQuadrant={setAddingToQuadrant}
+            inputRef={inputRef}
           />
           <MatrixQuadrant
             title="Delegate"
@@ -42,6 +50,10 @@ const Index = ({tasks, updateTask, removeTask}: {tasks: Task[], updateTask: (upd
             importance="not-important"
             updateTask={updateTask}
             removeTask={removeTask}
+            addTask={addTask}
+            addingToQuadrant={addingToQuadrant}
+            setAddingToQuadrant={setAddingToQuadrant}
+            inputRef={inputRef}
           />
           <MatrixQuadrant
             title="Eliminate"
@@ -52,6 +64,10 @@ const Index = ({tasks, updateTask, removeTask}: {tasks: Task[], updateTask: (upd
             importance="not-important"
             updateTask={updateTask}
             removeTask={removeTask}
+            addTask={addTask}
+            addingToQuadrant={addingToQuadrant}
+            setAddingToQuadrant={setAddingToQuadrant}
+            inputRef={inputRef}
           />
         </div>
       </div>
