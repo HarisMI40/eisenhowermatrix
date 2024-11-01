@@ -4,11 +4,13 @@ import { Task, Quadrant } from '@/lib/types'
 interface TasksState {
   tasks: Task[]
   addingToQuadrant: Quadrant | null
+  selectedTask: Task | null
 }
 
 const initialState: TasksState = {
   tasks: [],
   addingToQuadrant: null,
+  selectedTask: null,
 }
 
 const tasksSlice = createSlice({
@@ -35,8 +37,11 @@ const tasksSlice = createSlice({
     setAddingToQuadrant: (state, action: PayloadAction<Quadrant | null>) => {
       state.addingToQuadrant = action.payload
     },
+    setSelectedTask: (state, action: PayloadAction<Task | null>) => {
+      state.selectedTask = action.payload
+    },
   },
 })
 
-export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant } = tasksSlice.actions
+export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask } = tasksSlice.actions
 export default tasksSlice.reducer 
