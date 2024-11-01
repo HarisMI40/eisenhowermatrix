@@ -24,9 +24,12 @@ import {
 
 import { Input } from "@/components/ui/input"
 
+import { useDispatch } from 'react-redux'
+import { updateTask, removeTask } from '@/lib/store/tasksSlice'
 
+const List = ({ filteredTasks }: { filteredTasks: Task[] }) => {
+  const dispatch = useDispatch()
 
-const List = ({ filteredTasks, updateTask, removeTask }: { filteredTasks: Task[], updateTask: (updatedTask: Task) => void, removeTask: (id: number) => void }) => {
   return (
     <ul className="list-none pl-5 space-y-2">
       {filteredTasks.map(task => (
@@ -47,7 +50,7 @@ const List = ({ filteredTasks, updateTask, removeTask }: { filteredTasks: Task[]
                     <DialogHeader>
                       <DialogTitle className="my-8"><Input type="email" defaultValue={task.text}  className="border-0 text-lg focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:border-2 focus-visible:border-input focus-visible:border-blue-500" /></DialogTitle>
                       <DialogDescription>
-                        <Button variant="destructive" className="rounded-none" size={"sm"}  onClick={() => removeTask(task.id)}>
+                        <Button variant="destructive" className="rounded-none" size={"sm"}  onClick={() => dispatch(removeTask(task.id))}>
                             Delete Task
                           <span className="sr-only">Delete task</span>
                         </Button>

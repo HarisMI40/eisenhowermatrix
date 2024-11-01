@@ -1,4 +1,6 @@
-import { Quadrant, Task } from "@/lib/types"
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '@/lib/store/store'
+import { addTask, setAddingToQuadrant } from '@/lib/store/tasksSlice'
 import {
   Tooltip,
   TooltipContent,
@@ -8,26 +10,20 @@ import {
 
 import { IconQuestionCircle } from "@/lib/icons"
 import List from "./List"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
+import Form from '../form'
+
 
 type QuadrantProps = {
   title: string
   description: string
   bgColor: string
-  tasks: Task[]
   urgency: 'urgent' | 'not-urgent'
   importance: 'important' | 'not-important'
-  updateTask: (updatedTask: Task) => void
-  removeTask: (id: number) => void
-  addTask: (text: string, quadrant: Quadrant) => void
-  addingToQuadrant: Quadrant | null
-  setAddingToQuadrant: (quadrant: Quadrant | null) => void
-  inputRef: React.RefObject<HTMLInputElement>
 }
 
-const MatrixQuadrant = ({ title, description, bgColor, tasks, urgency, importance, updateTask, removeTask, addTask, addingToQuadrant, setAddingToQuadrant, inputRef }: QuadrantProps) => {
+const MatrixQuadrant = ({ title, description, bgColor, urgency, importance }: QuadrantProps) => {
+  const tasks = useSelector((state: RootState) => state.tasks.tasks)
+
   const filteredTasks = tasks.filter(task => 
     task.urgency === urgency && task.importance === importance
   )
@@ -45,35 +41,12 @@ const MatrixQuadrant = ({ title, description, bgColor, tasks, urgency, importanc
         </Tooltip>
       </TooltipProvider>
       </div>
-      <List filteredTasks={filteredTasks} updateTask={updateTask} removeTask={removeTask} />
-      {/* <List filteredTasks={filteredTasks} /> */}
+      <List filteredTasks={filteredTasks} />
 
-      {addingToQuadrant?.urgency === urgency && addingToQuadrant?.importance === importance ? (
-            <form className="mt-4" onSubmit={(e) => {
-              e.preventDefault()
-              const input = e.currentTarget.elements.namedItem('newTask') as HTMLInputElement
-              if (input.value.trim()) {
-                addTask(input.value.trim(), { urgency, importance})
-              }
-            }}>
-              <Input
-                ref={inputRef}
-                name="newTask"
-                placeholder="Enter a new task"
-                className="w-full focus-visible:ring-offset-0 focus-visible:ring-offset-transparent"
-                onBlur={() => setAddingToQuadrant(null)}
-              />
-            </form>
-          ) : (
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start mt-4" 
-              onClick={() => setAddingToQuadrant({ urgency, importance})}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add a task
-            </Button>
-          )}
+      <Form
+        urgency={urgency}
+        importance={importance}
+      />
 
      
     </div>
