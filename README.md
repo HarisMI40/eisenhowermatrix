@@ -45,7 +45,7 @@ The Eisenhower Matrix (also known as the Urgent-Important Matrix) is a productiv
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/HarisMI40/project__einshowermatrix2.git
+git clone https://github.com/HarisMI40/project__eisenhowermatrix.git
 ```
 
 2. Install dependencies:
