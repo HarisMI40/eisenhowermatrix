@@ -16,9 +16,11 @@ type QuadrantProps = {
   tasks: Task[]
   urgency: 'urgent' | 'not-urgent'
   importance: 'important' | 'not-important'
+  updateTask: (updatedTask: Task) => void
+  removeTask: (id: number) => void
 }
 
-const MatrixQuadrant = ({ title, description, bgColor, tasks, urgency, importance }: QuadrantProps) => {
+const MatrixQuadrant = ({ title, description, bgColor, tasks, urgency, importance, updateTask, removeTask }: QuadrantProps) => {
   const filteredTasks = tasks.filter(task => 
     task.urgency === urgency && task.importance === importance
   )
@@ -36,8 +38,8 @@ const MatrixQuadrant = ({ title, description, bgColor, tasks, urgency, importanc
         </Tooltip>
       </TooltipProvider>
       </div>
-     
-      <List filteredTasks={filteredTasks} />
+      <List filteredTasks={filteredTasks} updateTask={updateTask} removeTask={removeTask} />
+      {/* <List filteredTasks={filteredTasks} /> */}
 
      
     </div>

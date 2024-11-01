@@ -10,6 +10,7 @@ import { Task } from '@/lib/types'
 export default function Home() {
 
   const [tasks, setTasks] = useState<Task[]>([])
+  const [editingTask, setEditingTask] = useState<Task | null>(null)
 
   useEffect(() => {
     const dataTodo = localStorage.getItem("todoList");
@@ -24,13 +25,22 @@ export default function Home() {
       localStorage.setItem("todoList", JSON.stringify(newData));
   }
 
+  const updateTask = (updatedTask: Task) => {
+    setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task))
+    setEditingTask(null)
+  }
+
+  const removeTask = (id: number) => {
+    setTasks(tasks.filter(task => task.id !== id))
+  }
+
 
   return (
    <>
-      <TaskForm
+      {/* <TaskForm
         onTaskAdd={addTask}
-      />
-      <Matrix tasks={tasks} />
+      /> */}
+      <Matrix tasks={tasks} updateTask={updateTask} removeTask={removeTask} />
     </>
   );
 }
