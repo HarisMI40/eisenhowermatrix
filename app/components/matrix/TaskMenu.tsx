@@ -27,7 +27,10 @@ const TaskMenu = ({ task}: { task: Task }) => {
       >Delete</DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuSub>
-        <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+        <DropdownMenuSubTrigger
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >Move to</DropdownMenuSubTrigger>
         <DropdownMenuSubContent onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
           <DropdownMenuItem 
             onSelect={(e) => {
