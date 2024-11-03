@@ -2,7 +2,6 @@ import { Task } from "@/lib/types"
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Quadrant } from "@/lib/types"
 import { MoreVertical } from "lucide-react"
 import { useDispatch } from "react-redux"
 import { removeTask, moveTask } from "@/lib/store/tasksSlice"

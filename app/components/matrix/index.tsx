@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import MatrixQuadrant from './MatrixQuadrant'
 import MatrixHeaders from './MatrixHeaders'
 import { useEffect } from 'react'

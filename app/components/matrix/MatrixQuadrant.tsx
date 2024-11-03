@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '@/lib/store/store'
-import { addTask, setAddingToQuadrant } from '@/lib/store/tasksSlice'
 import {
   Tooltip,
   TooltipContent,
