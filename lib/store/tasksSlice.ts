@@ -40,8 +40,17 @@ const tasksSlice = createSlice({
     setSelectedTask: (state, action: PayloadAction<Task | null>) => {
       state.selectedTask = action.payload
     },
+
+     // moveTask : (taskId: number, newQuadrant: Quadrant) => {
+    moveTask : (state, action: PayloadAction<{ taskId: number, newQuadrant: Quadrant }>) => {
+      state.tasks = state.tasks.map(task => 
+        task.id === action.payload.taskId 
+          ? { ...task, urgency: action.payload.newQuadrant.urgency, importance: action.payload.newQuadrant.importance }
+          : task
+      )
+    },
   },
 })
 
-export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask } = tasksSlice.actions
+export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask } = tasksSlice.actions
 export default tasksSlice.reducer 

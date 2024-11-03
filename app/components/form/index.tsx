@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
@@ -16,6 +16,12 @@ const index = ({ urgency, importance }: FormProps) => {
   const addingToQuadrant = useSelector((state: RootState) => state.tasks.addingToQuadrant)
   const inputRef = useRef<HTMLInputElement>(null)
   
+  useEffect(() => {
+    if (addingToQuadrant?.urgency === urgency && addingToQuadrant?.importance === importance) {
+      inputRef.current?.focus()
+    }
+  }, [addingToQuadrant, urgency, importance])
+
   const handleAddTask = (text: string) => {
     const newTask = {
       id: Date.now(),
@@ -26,9 +32,9 @@ const index = ({ urgency, importance }: FormProps) => {
     dispatch(addTask(newTask))
     dispatch(setAddingToQuadrant(null))
   }
-  return (
-    <>
-    {addingToQuadrant?.urgency === urgency && addingToQuadrant?.importance === importance ? (
+
+  if(addingToQuadrant?.urgency === urgency && addingToQuadrant?.importance === importance){
+    return (
       <form className="mt-4" onSubmit={(e) => {
         e.preventDefault()
         const input = e.currentTarget.elements.namedItem('newTask') as HTMLInputElement
@@ -44,18 +50,20 @@ const index = ({ urgency, importance }: FormProps) => {
           onBlur={() => dispatch(setAddingToQuadrant(null))}
         />
       </form>
-    ) : (
+    )
+  }else {
+    return(
       <Button 
-        variant="ghost" 
-        className="w-full justify-start mt-4" 
-        onClick={() => dispatch(setAddingToQuadrant({ urgency, importance}))}
-      >
-        <Plus className="h-4 w-4 mr-2" />
-        Add a task
-      </Button>
-    )}
-    </>
-  )
+      variant="ghost" 
+      className="w-full justify-start mt-4" 
+      onClick={() => dispatch(setAddingToQuadrant({ urgency, importance}))}
+    >
+      <Plus className="h-4 w-4 mr-2" />
+      Add a task
+    </Button>
+    )
+   
+  }
 }
 
 export default index
