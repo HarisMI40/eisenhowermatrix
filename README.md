@@ -2,6 +2,9 @@
 
 A modern web application built with Next.js that implements the Eisenhower Matrix methodology for task management and prioritization.
 
+![Eisenhower Matrix Screenshot](public/ss-project.png)
+
+
 ## Overview
 
 The Eisenhower Matrix (also known as the Urgent-Important Matrix) is a productivity and decision-making tool that helps you organize tasks based on their urgency and importance. The matrix divides tasks into four quadrants:
