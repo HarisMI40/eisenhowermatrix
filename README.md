@@ -48,7 +48,7 @@ The Eisenhower Matrix (also known as the Urgent-Important Matrix) is a productiv
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/HarisMI40/project__eisenhowermatrix.git
+git clone https://github.com/HarisMI40/eisenhowermatrix.git
 ```
 
 2. Install dependencies:
@@ -66,23 +66,6 @@ yarn dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Project Structure
-
-```
-├── app/
-│   ├── components/
-│   │   ├── matrix/         # Matrix-related components
-│   │   ├── form/          # Task form components
-│   │   └── modal.tsx      # Task edit modal
-│   └── page.tsx           # Main page
-├── lib/
-│   ├── store/            # Redux store configuration
-│   │   ├── store.ts
-│   │   └── tasksSlice.ts
-│   └── types.ts          # TypeScript types
-└── components/           # Shared UI components
-```
 
 ## Contributing
 
