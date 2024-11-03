@@ -43,11 +43,14 @@ const tasksSlice = createSlice({
 
      // moveTask : (taskId: number, newQuadrant: Quadrant) => {
     moveTask : (state, action: PayloadAction<{ taskId: number, newQuadrant: Quadrant }>) => {
-      state.tasks = state.tasks.map(task => 
+      const updatedTask = state.tasks.map(task => 
         task.id === action.payload.taskId 
           ? { ...task, urgency: action.payload.newQuadrant.urgency, importance: action.payload.newQuadrant.importance }
           : task
       )
+      state.tasks = updatedTask;
+
+      localStorage.setItem("todoList", JSON.stringify(state.tasks))
     },
   },
 })
