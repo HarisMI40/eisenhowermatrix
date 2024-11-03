@@ -11,7 +11,7 @@ type FormProps = {
   importance: 'important' | 'not-important'
 }
 
-const index = ({ urgency, importance }: FormProps) => {
+const Index = ({ urgency, importance }: FormProps) => {
   const dispatch = useDispatch()
   const addingToQuadrant = useSelector((state: RootState) => state.tasks.addingToQuadrant)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -66,4 +66,4 @@ const index = ({ urgency, importance }: FormProps) => {
   }
 }
 
-export default index
+export default Index
