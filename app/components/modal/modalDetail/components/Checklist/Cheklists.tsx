@@ -63,7 +63,7 @@ const Cheklists = () => {
           {/* <Button variant="outline" size="sm" onClick={() => deleteListHandler(checklist.id)}>Delete</Button> */}
         </div>
         <div className="space-y-2">
-          <Lists id={checklist.id} list={checklist.item}/>
+          <Lists taskId={selectedTask?.id}  id={checklist.id} list={checklist.item}/>
 
           
           {isAddingItem == checklist.id ? (

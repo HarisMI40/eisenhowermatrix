@@ -126,9 +126,42 @@ const tasksSlice = createSlice({
         // Persist the updated tasks to localStorage
         localStorage.setItem("todoList", JSON.stringify(state.tasks));
       }
+    },
+
+    checkedListItem: (state, action: PayloadAction<{ taskId: number; checklistId: string; itemId: string; checked: boolean }>) => {
+      const { taskId, checklistId, itemId, checked } = action.payload; // Destructure payload
+
+      // Update the tasks state
+      state.tasks = state.tasks.map(task => {
+        if (task.id === taskId) {
+          // Update the checklist for the found task
+          const updatedCheckList = task.checkList.map(checkList => {
+            if (checkList.id === checklistId) {
+              // Update the item within the checklist
+              const updatedItems = checkList.item.map(item => {
+                if (item.id === itemId) {
+                  return { ...item, checked }; // Update the checked status
+                }
+                return item; // Return unchanged item
+              });
+
+              return { ...checkList, item: updatedItems }; // Return updated checklist
+            }
+            return checkList; // Return unchanged checklist
+          });
+
+          state.selectedTask = { ...task, checkList: updatedCheckList };
+
+          return { ...task, checkList: updatedCheckList }; // Return updated task
+        }
+        return task; // Return unchanged task
+      });
+
+      // Persist the updated tasks to localStorage
+      localStorage.setItem("todoList", JSON.stringify(state.tasks));
     }
   }
 })
 
-export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask, addList, addListItem } = tasksSlice.actions
+export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask, addList, addListItem, checkedListItem } = tasksSlice.actions
 export default tasksSlice.reducer 
