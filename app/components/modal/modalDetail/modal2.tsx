@@ -16,12 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import InputText from './components/InputText'
-
-
-type isEdit = {
-  text: boolean,
-  description: boolean,
-}
+import Description from './components/Description'
 
 type inputValue = {
   text: string,
@@ -174,41 +169,12 @@ const Modal = () => {
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   // const [isEditDescriptionModal, setIsEditDescriptionModal] = useState(false);
-  const [isEdit, setIsEdit] = useState<isEdit>({
-    text: false,
-    description: false
-  });
+
 
   const [input, setInput] = useState<inputValue>({
     text: "",
     description: ""
   })
-
-  const saveDescriptionHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // console.log(selectedTask)
-    // save to LocalStorage
-    // dispatch(updateTask(({ ...selectedTask, description: inputDescription }))) 
-
-    if (!selectedTask) {
-      // Handle the case where selectedTask is null
-      console.error("Selected task is null");
-      return; // or throw new Error("Selected task is null");
-    }
-
-    const newUpdateTask: Task = {
-      ...selectedTask,
-      description: input.description
-    }
-
-    dispatch(updateTask((newUpdateTask)))
-
-    setTask(newUpdateTask);
-    setInput({ text: "", description: "" })
-
-    setIsEdit({ ...isEdit, description: false });
-  }
 
 
 
@@ -239,41 +205,7 @@ const Modal = () => {
               <div className="space-y-6">
 
                 {/* Description */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium">Description</h3>
-                    {isEdit.description ?
-                      <Button variant="outline" size="sm" onClick={() => {
-                        setInput({ ...input, description: "" })
-                        setIsEdit({ ...isEdit, description: false })
-                      }}>Cancel</Button>
-                      :
-                      <Button variant="outline" size="sm" onClick={() => {
-                        setInput({ ...input, description: task.description })
-                        setIsEdit({ ...isEdit, description: true })
-                      }}>Edit</Button>
-                    }
-                  </div>
-
-                  {isEdit.description
-                    ?
-                    <form onSubmit={saveDescriptionHandler}>
-
-                      <Textarea
-                        value={input.description}
-                        // onChange={(e) => dispatch(updateTask(({ ...selectedTask, description: e.target.value })))   }
-                        onChange={(e) => setInput({ ...input, description: e.target.value })}
-                        className="min-h-[100px] border-black"
-                      />
-
-                      <Button variant={'default'} type="submit" className="my-3">Save</Button>
-                    </form>
-                    :
-                    <div className='bg-gray-100 p-3'>
-                      {task.description}
-                    </div>
-                  }
-                </div>
+                <Description />
 
                 {/* Detail */}
                 {checklist.map(checklist => (
