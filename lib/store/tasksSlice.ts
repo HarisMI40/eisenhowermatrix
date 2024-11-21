@@ -90,43 +90,42 @@ const tasksSlice = createSlice({
 
 
 
-    addListItem: (state, action: PayloadAction<{ taskId: number, checkListId : string , newItem: string }>) => {
-      console.log("membuat List item")
-      const newItem = {
+    addListItem: (state, action: PayloadAction<{ taskId: number; checkListId: string; newItem: string }>) => {
+      console.log("Creating List item");
+
+      const { taskId, checkListId, newItem: newItemText } = action.payload; // Destructure payload
+      const newItemObj = {
         id: Date.now().toString(),
-        text: action.payload.newItem.trim(),
-        checked: false
-      }
+        text: newItemText.trim(),
+        checked: false,
+      };
 
+      // Find the task to update
+      const taskToUpdate = state.tasks.find(task => task.id === taskId);
 
-      const updateTasks = state.tasks.map((task) => {
-        if (task.id == action.payload.taskId) {
-
-          const updateTaskSelected = {
-            ...task,
-            checkList : task.checkList.map(checkList => {
-              if(checkList.id == action.payload.checkListId){
-                return{
-                  ...checkList,
-                  item : [...checkList.item, newItem]
-                }
-              }
-
-              return checkList;
-            })
+      if (taskToUpdate) {
+        // Create a new task object with updated checklist
+        const updatedCheckList = taskToUpdate.checkList.map(checkList => {
+          if (checkList.id === checkListId) {
+            return {
+              ...checkList,
+              item: [...checkList.item, newItemObj], // Add the new item to the checklist
+            };
           }
+          return checkList; // Return unchanged checklist
+        });
 
-          state.selectedTask = updateTaskSelected;
+        // Update the tasks state immutably
+        state.tasks = state.tasks.map(task =>
+          task.id === taskId ? { ...task, checkList: updatedCheckList } : task
+        );
 
-          return updateTaskSelected;
-        }
+        // Optionally update the selected task
+        state.selectedTask = { ...taskToUpdate, checkList: updatedCheckList };
 
-        return task;
-      });
-
-      state.tasks = updateTasks;
-
-      localStorage.setItem("todoList", JSON.stringify(updateTasks))
+        // Persist the updated tasks to localStorage
+        localStorage.setItem("todoList", JSON.stringify(state.tasks));
+      }
     }
   }
 })
