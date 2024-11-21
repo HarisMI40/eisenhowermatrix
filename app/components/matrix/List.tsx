@@ -13,7 +13,7 @@ const List = ({ filteredTasks }: { filteredTasks: Task[] }) => {
         <li key={task.id} className="text-sm cursor-pointer" onClick={() => dispatch(setSelectedTask(task))}>
           <Card key={task.id} className="bg-white shadow-sm hover:shadow-md transition-shadow">
             <CardContent className="p-4 flex items-center justify-between">
-              <span className="text-sm">{task.text}</span>
+              <span className={`text-sm ${task.completed ? "line-through" : ""}`}>{task.text}</span>
               <TaskMenu task={task} />
             </CardContent>
           </Card>
