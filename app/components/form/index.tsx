@@ -5,6 +5,7 @@ import { Plus } from "lucide-react"
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/lib/store/store'
 import { addTask, setAddingToQuadrant } from '@/lib/store/tasksSlice'
+import { Task } from '@/lib/types'
 
 type FormProps = {
   urgency: 'urgent' | 'not-urgent'
@@ -23,11 +24,18 @@ const Index = ({ urgency, importance }: FormProps) => {
   }, [addingToQuadrant, urgency, importance])
 
   const handleAddTask = (text: string) => {
-    const newTask = {
+    const newTask: Task = {
       id: Date.now(),
       text,
       urgency,
-      importance
+      importance,
+      description: '',
+      startDate: '',
+      dueDate: '',
+      completed: false,
+      category: '',
+      checkList : [],
+      createdAt: new Date().toISOString(),
     }
     dispatch(addTask(newTask))
     dispatch(setAddingToQuadrant(null))
@@ -62,7 +70,6 @@ const Index = ({ urgency, importance }: FormProps) => {
       Add a task
     </Button>
     )
-   
   }
 }
 
