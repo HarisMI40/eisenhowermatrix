@@ -22,11 +22,6 @@ const Description = () => {
       return; // or throw new Error("Selected task is null");
     }
 
-    if (inputValue == "") {
-      alert('judul tidak boleh kosong');
-      return;
-    }
-
     dispatch(updateTask(({ ...selectedTask, description: inputValue })))
 
     setIsEdit(false);
