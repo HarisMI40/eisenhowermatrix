@@ -28,6 +28,9 @@ const tasksSlice = createSlice({
       state.tasks = state.tasks.map(task => 
         task.id === action.payload.id ? action.payload : task
       )
+
+      state.selectedTask = action.payload;
+      
       localStorage.setItem("todoList", JSON.stringify(state.tasks))
     },
     removeTask: (state, action: PayloadAction<number>) => {
