@@ -4,3 +4,7 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export const generateRandomId = (length: number) => {
+  return Math.random().toString(36).slice(2, 2 + length);
+}

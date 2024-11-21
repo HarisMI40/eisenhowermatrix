@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Task, Quadrant } from '@/lib/types'
+import { Task, Quadrant, ChecklistItem } from '@/lib/types'
+import { generateRandomId } from '../utils'
 
 interface TasksState {
   tasks: Task[]
@@ -55,8 +56,80 @@ const tasksSlice = createSlice({
 
       localStorage.setItem("todoList", JSON.stringify(state.tasks))
     },
-  },
+
+    addList: (state, action: PayloadAction<string>) => {
+      const newCheckList: ChecklistItem = {
+        "id": generateRandomId(8),
+        "title": action.payload,
+        "item": []
+      };
+
+      // add new checklist to task
+      const newTask = state.tasks.map(task => {
+        if(task.id == state.selectedTask?.id){
+          const updateChecklist = {
+            ...task,
+            checkList : [...task.checkList, newCheckList]
+          }; 
+
+          // update selectedTask
+          state.selectedTask = updateChecklist;
+
+          // if task is selected task, then update task : add new checklist
+          return updateChecklist;
+        }
+
+        return {...task};
+      });
+
+      state.tasks = newTask;
+
+      localStorage.setItem("todoList", JSON.stringify(newTask))
+    },
+
+
+
+
+    addListItem: (state, action: PayloadAction<{ taskId: number, checkListId : string , newItem: string }>) => {
+      console.log("membuat List item")
+      const newItem = {
+        id: Date.now().toString(),
+        text: action.payload.newItem.trim(),
+        checked: false
+      }
+
+
+      const updateTasks = state.tasks.map((task) => {
+        if (task.id == action.payload.taskId) {
+
+          const updateTaskSelected = {
+            ...task,
+            checkList : task.checkList.map(checkList => {
+              if(checkList.id == action.payload.checkListId){
+                return{
+                  ...checkList,
+                  item : [...checkList.item, newItem]
+                }
+              }
+
+              return checkList;
+            })
+          }
+
+          state.selectedTask = updateTaskSelected;
+
+          return updateTaskSelected;
+        }
+
+        return task;
+      });
+
+      state.tasks = updateTasks;
+
+      localStorage.setItem("todoList", JSON.stringify(updateTasks))
+    }
+  }
 })
 
-export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask } = tasksSlice.actions
+export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask, addList, addListItem } = tasksSlice.actions
 export default tasksSlice.reducer 

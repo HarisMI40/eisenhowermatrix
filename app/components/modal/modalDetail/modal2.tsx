@@ -1,15 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { setSelectedTask, updateTask, removeTask } from '@/lib/store/tasksSlice'
+import { setSelectedTask, updateTask, addList } from '@/lib/store/tasksSlice'
 import { RootState } from '@/lib/store/store'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
-import { useState, useEffect, KeyboardEvent, FormEventHandler, useRef, useActionState } from 'react'
-import { Textarea } from '@/components/ui/textarea'
-// import { Label } from '@radix-ui/react-label'
-import { ChecklistItem, Task } from '@/lib/types'
-import { Calendar, Plus, ListTodo } from 'lucide-react'
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState, useEffect } from 'react'
+
+import {  Task } from '@/lib/types'
+import { Calendar, ListTodo } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
@@ -17,11 +15,7 @@ import {
 } from "@/components/ui/popover"
 import InputText from './components/InputText'
 import Description from './components/Description'
-
-type inputValue = {
-  text: string,
-  description: string
-}
+import Cheklists from './components/Checklist/Cheklists'
 
 const Modal = () => {
   const initialTask: Task = {
@@ -76,107 +70,20 @@ const Modal = () => {
     }
   }
 
-  const [checklist, setChecklist] = useState<ChecklistItem[]>([])
-
-  const [isAddingItem, setIsAddingItem] = useState("")
-  const [newItemText, setNewItemText] = useState('')
-
-  const handleAddItem = (id: string) => {
-    if (newItemText.trim()) {
-      const newItem = {
-        id: Date.now().toString(),
-        text: newItemText.trim(),
-        checked: false
-      }
-
-      const newCheckList = checklist.map((check) => {
-        if (check.id == id) {
-          return {
-            ...check,
-            "item": [...check.item, newItem]
-          }
-        }
-
-        return { ...check }
-      });
-
-      setChecklist(newCheckList)
-      setNewItemText('')
-      setIsAddingItem("")
-    }
-  }
-
-
-  const handleCheckedItem = (checklistId: string, itemId: string, checked: string | boolean) => {
-    const updateChecklist = checklist.map((listCheck) => {
-      if (listCheck.id == checklistId) {
-
-        return {
-          ...listCheck,
-          item: listCheck.item.map(item => item.id === itemId ? { ...item, checked: !!checked } : item)
-        }
-
-      } else {
-        return listCheck;
-      }
-
-
-    }
-    );
-
-    setChecklist(updateChecklist);
-  }
-
-
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>, id: string) => {
-    if (e.key === 'Enter') {
-      handleAddItem(id);
-      console.log(id);
-    }
-  }
-
-  const deleteListHandler = (id: string) => {
-    const checklistUpdate = checklist.filter(checklist => checklist.id !== id);
-    setChecklist(checklistUpdate);
-  }
-
-  const generateRandomId = (length: number) => {
-    return Math.random().toString(36).slice(2, 2 + length);
-  }
-
   const addListHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newCheckList: ChecklistItem[] = [
-      ...checklist,
-      {
-        "id": generateRandomId(8),
-        "title": titleList,
-        "item": []
-      }
-    ];
 
-    setChecklist(newCheckList);
+    dispatch(addList(titleList));
     setTitleList("");
-
   }
 
 
-  // const [inputList, setInputList] = useState("");
   const [titleList, setTitleList] = useState("");
 
 
-  const inputListRef = useRef<HTMLInputElement>(null);
+
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  // const [isEditDescriptionModal, setIsEditDescriptionModal] = useState(false);
-
-
-  const [input, setInput] = useState<inputValue>({
-    text: "",
-    description: ""
-  })
-
-
 
   if (!selectedTask) return null
 
@@ -208,52 +115,7 @@ const Modal = () => {
                 <Description />
 
                 {/* Detail */}
-                {checklist.map(checklist => (
-                  <div className="space-y-2" key={checklist.id}>
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium">{checklist.title}</h3>
-                      <Button variant="outline" size="sm" onClick={() => deleteListHandler(checklist.id)}>Delete</Button>
-                    </div>
-                    <div className="space-y-2">
-                      {checklist.item.map((item) => (
-                        <div key={item.id} className="flex items-center space-x-2">
-                          <Checkbox
-                            checked={item.checked}
-                            onCheckedChange={(checked) => {
-                              handleCheckedItem(checklist.id, item.id, checked)
-                            }}
-                          />
-                          <label className={`text-sm ${item.checked ? "line-through" : null}`}>{item.text}</label>
-                        </div>
-                      ))}
-                      {isAddingItem == checklist.id ? (
-                        <form className="flex items-center space-x-2">
-                          <Input
-                            ref={inputListRef}
-                            value={newItemText}
-                            onChange={(e) => setNewItemText(e.target.value)}
-                            onKeyDown={(e) => handleKeyPress(e, checklist.id)}
-                            placeholder="Enter new item"
-                            className="flex-grow"
-                          />
-                          <Button size="sm" onClick={(e) => handleAddItem(checklist.id)}>Add</Button>
-                          <Button size="sm" variant="ghost" onClick={() => {
-                            setIsAddingItem("");
-                          }
-                          }>Cancel</Button>
-                        </form>
-                      ) : (
-                        <Button variant="ghost" size="sm" className="gap-2" onClick={() => {
-                          setIsAddingItem(checklist.id);
-                          inputListRef.current?.focus();
-                        }}>
-                          <Plus className="h-4 w-4" />
-                          Add an item
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                <Cheklists />
 
 
               </div>
