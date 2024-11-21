@@ -1,0 +1,9 @@
+{
+  "name": "Eisenhower Matrix",
+  "short_name": "Eisenhower",
+  "theme_color": "#37b6fc",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/"
+} 
