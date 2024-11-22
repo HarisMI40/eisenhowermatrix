@@ -46,8 +46,6 @@ const MatrixQuadrant = ({ title, description, bgColor, urgency, importance }: Qu
         urgency={urgency}
         importance={importance}
       />
-
-     
     </div>
   )
 }

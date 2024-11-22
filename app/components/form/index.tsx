@@ -30,6 +30,7 @@ const Index = ({ urgency, importance }: FormProps) => {
       urgency,
       importance,
       description: '',
+      startTime : "",
       startDate: '',
       dueDate: '',
       completed: false,
@@ -62,8 +63,8 @@ const Index = ({ urgency, importance }: FormProps) => {
   }else {
     return(
       <Button 
-      variant="ghost" 
-      className="w-full justify-start mt-4" 
+      variant="outline"
+      className="w-full justify-start mt-4 text-sm font-normal bg-white hover:bg-gray-50"
       onClick={() => dispatch(setAddingToQuadrant({ urgency, importance}))}
     >
       <Plus className="h-4 w-4 mr-2" />

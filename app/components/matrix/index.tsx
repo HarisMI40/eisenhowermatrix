@@ -9,17 +9,22 @@ const Index = () => {
 
   useEffect(() => {
     const dataTodo = localStorage.getItem("todoList");
-    if(dataTodo){
+    if (dataTodo) {
       dispatch(setTasks(JSON.parse(dataTodo)));
     }
   }, [dispatch]);
 
   return (
     <div className="w-full md:w-6/12">
-      <h1 className="text-3xl font-serif text-center mb-8">The Eisenhower Matrix</h1>
+      <div className="text-center text-white space-y-2 mb-8">
+        <h1 className="text-4xl font-serif">The Eisenhower Matrix</h1>
+        <p className="text-sm">Prioritize tasks based on urgency and importance</p>
+      </div>
+
+
       <div className="relative">
         <MatrixHeaders />
-        <div className="grid grid-cols-2 border border-gray-200">
+        <div className="grid grid-cols-2 border bg-white p-1 rounded gap-1 shadow-xl">
           <MatrixQuadrant
             title="Do"
             description="Tasks that need immediate attention and have high importance."

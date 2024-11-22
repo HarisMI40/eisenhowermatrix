@@ -8,10 +8,10 @@ const MatrixHeaders = () => {
       </div>
       
       {/* Row Labels */}
-      <div className="absolute -left-24 top-1/4 -rotate-90 font-semibold">
+      <div className="absolute -left-24 top-1/4 -rotate-90 font-semibold whitespace-nowrap">
         Important
       </div>
-      <div className="absolute -left-24 top-3/4 -rotate-90 font-semibold">
+      <div className="absolute -left-24 top-3/4 -rotate-90 font-semibold whitespace-nowrap">
         Not Important
       </div>
     </>
