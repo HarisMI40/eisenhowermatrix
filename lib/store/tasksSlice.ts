@@ -129,37 +129,36 @@ const tasksSlice = createSlice({
     },
 
     checkedListItem: (state, action: PayloadAction<{ taskId: number; checklistId: string; itemId: string; checked: boolean }>) => {
-      const { taskId, checklistId, itemId, checked } = action.payload; // Destructure payload
-
-      // Update the tasks state
-      state.tasks = state.tasks.map(task => {
-        if (task.id === taskId) {
-          // Update the checklist for the found task
-          const updatedCheckList = task.checkList.map(checkList => {
-            if (checkList.id === checklistId) {
-              // Update the item within the checklist
-              const updatedItems = checkList.item.map(item => {
-                if (item.id === itemId) {
-                  return { ...item, checked }; // Update the checked status
-                }
-                return item; // Return unchanged item
-              });
-
-              return { ...checkList, item: updatedItems }; // Return updated checklist
-            }
-            return checkList; // Return unchanged checklist
-          });
-
-          state.selectedTask = { ...task, checkList: updatedCheckList };
-
-          return { ...task, checkList: updatedCheckList }; // Return updated task
-        }
-        return task; // Return unchanged task
-      });
-
-      // Persist the updated tasks to localStorage
-      localStorage.setItem("todoList", JSON.stringify(state.tasks));
-    }
+      const { taskId, checklistId, itemId, checked } = action.payload;
+    
+      // Helper function to update item
+      const updateItemCheckedStatus = (items: any[]) => 
+        items.map(item => item.id === itemId ? { ...item, checked } : item);
+    
+      // Helper function to update checklist
+      const updateChecklist = (checkLists: any[]) => 
+        checkLists.map(checkList =>
+          checkList.id === checklistId
+            ? { ...checkList, item: updateItemCheckedStatus(checkList.item) }
+            : checkList
+        );
+    
+      // Locate the task to update
+      const taskIndex = state.tasks.findIndex(task => task.id === taskId);
+      if (taskIndex !== -1) {
+        // Update task in state
+        const updatedTask = {
+          ...state.tasks[taskIndex],
+          checkList: updateChecklist(state.tasks[taskIndex].checkList),
+        };
+    
+        state.tasks[taskIndex] = updatedTask; // Update tasks array
+        state.selectedTask = updatedTask; // Update selectedTask
+    
+        // Persist to localStorage
+        localStorage.setItem("todoList", JSON.stringify(state.tasks));
+      }
+    } 
   }
 })
 
