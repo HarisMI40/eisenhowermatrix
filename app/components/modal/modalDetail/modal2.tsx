@@ -4,9 +4,8 @@ import { RootState } from '@/lib/store/store'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-import { Task } from '@/lib/types'
 import { ListTodo, Tag } from 'lucide-react'
 import {
   Popover,
@@ -20,37 +19,13 @@ import Dates from './components/Dates'
 import DueDateDisplay from './components/DateDisplay'
 
 const Modal = () => {
-  const initialTask: Task = {
-    id: 0,
-    createdAt: '',
-    text: '',
-    urgency: 'urgent',
-    importance: 'important',
-    description: '',
-    startDate: null,
-    dueDate: '',
-    startTime : "",
-    completed: false,
-    category: '',
-    checkList: []
-  }
-
 
   const dispatch = useDispatch()
   const selectedTask = useSelector((state: RootState) => state.tasks.selectedTask)
-  const [task, setTask] = useState(initialTask)
 
-  useEffect(() => {
-    if (selectedTask) {
-      setTask({
-        ...selectedTask
-      })
-    }
-  }, [selectedTask])
 
   const handleClose = () => {
     dispatch(setSelectedTask(null))
-    setTask(initialTask)
   }
 
 
