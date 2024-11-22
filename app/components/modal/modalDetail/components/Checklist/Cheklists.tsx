@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-// import { addListItem, deleteList } from '@/lib/store/listSlice';
 import { RootState } from '@/lib/store/store';
-// import { ChecklistItem } from '@/lib/types';
-// import { Checkbox } from '@radix-ui/react-checkbox';
 import { Plus } from 'lucide-react';
 import React, { KeyboardEvent, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,17 +8,11 @@ import Lists from './Lists';
 import { addListItem } from '@/lib/store/tasksSlice';
 
 const Cheklists = () => {
-  // const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
   const selectedTask = useSelector((state:RootState) => state.tasks.selectedTask);
   const [isAddingItem, setIsAddingItem] = useState("");
   const inputListRef = useRef<HTMLInputElement>(null);
   const [newItemText, setNewItemText] = useState('')
   const dispatch = useDispatch();
-
-  // const deleteListHandler = (id: string) => {
-  //   dispatch(deleteList(id));
-  // }
-
 
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>, id: string) => {
@@ -76,7 +67,7 @@ const Cheklists = () => {
                 placeholder="Enter new item"
                 className="flex-grow"
               />
-              <Button size="sm" onClick={(e) => handleAddItem(checklist.id)}>Add</Button>
+              <Button size="sm" onClick={() => handleAddItem(checklist.id)}>Add</Button>
               <Button size="sm" variant="ghost" onClick={() => {
                 setIsAddingItem("");
               }

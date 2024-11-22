@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { setSelectedTask, updateTask, addList } from '@/lib/store/tasksSlice'
+import { setSelectedTask, addList } from '@/lib/store/tasksSlice'
 import { RootState } from '@/lib/store/store'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 
 import { Task } from '@/lib/types'
-import { Calendar, ListTodo, Tag } from 'lucide-react'
+import { ListTodo, Tag } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
@@ -53,26 +53,6 @@ const Modal = () => {
     setTask(initialTask)
   }
 
-  const handleUpdate = () => {
-    console.log(task)
-    if (selectedTask && task.text.trim()) {
-      dispatch(updateTask({
-        id: selectedTask.id,
-        createdAt: selectedTask.createdAt,
-        text: task.text.trim(),
-        urgency: task.urgency,
-        importance: task.importance,
-        description: task.description,
-        startDate: task.startDate,
-        dueDate: task.dueDate,
-        startTime : "",
-        completed: task.completed,
-        category: task.category,
-        checkList: []
-      }))
-      handleClose()
-    }
-  }
 
   const addListHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

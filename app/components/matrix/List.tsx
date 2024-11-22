@@ -1,7 +1,7 @@
 import { Task } from "@/lib/types"
 import { useDispatch } from 'react-redux'
 import { setSelectedTask } from '@/lib/store/tasksSlice'
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import TaskMenu from "./TaskMenu"
 import { format } from "date-fns"
 import { Clock } from "lucide-react"

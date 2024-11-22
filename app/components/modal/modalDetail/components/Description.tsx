@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { RootState } from '@/lib/store/store';
 import { updateTask } from '@/lib/store/tasksSlice';
-import { Task } from '@/lib/types';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 

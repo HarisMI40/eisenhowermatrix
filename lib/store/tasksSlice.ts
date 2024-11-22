@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Task, Quadrant, ChecklistItem } from '@/lib/types'
+import { Task, Quadrant, ChecklistItem, itemList } from '@/lib/types'
 import { generateRandomId } from '../utils'
-import { format } from 'date-fns'
 
 interface TasksState {
   tasks: Task[]
@@ -133,11 +132,11 @@ const tasksSlice = createSlice({
       const { taskId, checklistId, itemId, checked } = action.payload;
     
       // Helper function to update item
-      const updateItemCheckedStatus = (items: any[]) => 
+      const updateItemCheckedStatus = (items: itemList[]) => 
         items.map(item => item.id === itemId ? { ...item, checked } : item);
     
       // Helper function to update checklist
-      const updateChecklist = (checkLists: any[]) => 
+      const updateChecklist = (checkLists: ChecklistItem[]) => 
         checkLists.map(checkList =>
           checkList.id === checklistId
             ? { ...checkList, item: updateItemCheckedStatus(checkList.item) }

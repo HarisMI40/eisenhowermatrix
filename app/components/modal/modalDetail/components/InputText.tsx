@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { RootState } from '@/lib/store/store';
 import { updateTask } from '@/lib/store/tasksSlice';
 import { ListTodo } from 'lucide-react';
-import React, { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const InputText = () => {
