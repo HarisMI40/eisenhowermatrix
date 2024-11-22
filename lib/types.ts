@@ -4,8 +4,10 @@ export type Task = {
   urgency: 'urgent' | 'not-urgent'
   importance: 'important' | 'not-important', 
   description: string,
-  startDate: string,
+  // startDate: Date | null,
+  startDate: string | null,
   dueDate: string,
+  startTime : string,
   completed: boolean,
   category: string,
   checkList : ChecklistItem[]

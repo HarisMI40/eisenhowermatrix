@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 
-import {  Task } from '@/lib/types'
-import { Calendar, ListTodo } from 'lucide-react'
+import { Task } from '@/lib/types'
+import { Calendar, ListTodo, Tag } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
@@ -16,6 +16,8 @@ import {
 import InputText from './components/InputText'
 import Description from './components/Description'
 import Cheklists from './components/Checklist/Cheklists'
+import Dates from './components/Dates'
+import DueDateDisplay from './components/DateDisplay'
 
 const Modal = () => {
   const initialTask: Task = {
@@ -25,8 +27,9 @@ const Modal = () => {
     urgency: 'urgent',
     importance: 'important',
     description: '',
-    startDate: '',
+    startDate: null,
     dueDate: '',
+    startTime : "",
     completed: false,
     category: '',
     checkList: []
@@ -62,6 +65,7 @@ const Modal = () => {
         description: task.description,
         startDate: task.startDate,
         dueDate: task.dueDate,
+        startTime : "",
         completed: task.completed,
         category: task.category,
         checkList: []
@@ -110,6 +114,8 @@ const Modal = () => {
             {/* Main Content */}
             <div className="flex-1 p-4">
               <div className="space-y-6">
+                {/* Due Date */}
+                <DueDateDisplay />
 
                 {/* Description */}
                 <Description />
@@ -124,9 +130,11 @@ const Modal = () => {
             {/* Sidebar */}
             <div className="w-64 border-l p-4 space-y-4 overflow-y-auto">
               <Button variant="secondary" className="w-full justify-start gap-2">
-                {/* <Tag className="h-4 w-4" /> */}
+                <Tag className="h-4 w-4" />
                 Labels
               </Button>
+
+
               <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger asChild>
                   <Button variant="secondary" className="w-full justify-start gap-2" onClick={() => setIsPopoverOpen(true)}>
@@ -152,10 +160,7 @@ const Modal = () => {
                 </PopoverContent>
               </Popover>
 
-              <Button variant="secondary" className="w-full justify-start gap-2">
-                <Calendar className="h-4 w-4" />
-                Dates
-              </Button>
+              <Dates />
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Task, Quadrant, ChecklistItem } from '@/lib/types'
 import { generateRandomId } from '../utils'
+import { format } from 'date-fns'
 
 interface TasksState {
   tasks: Task[]
@@ -158,9 +159,37 @@ const tasksSlice = createSlice({
         // Persist to localStorage
         localStorage.setItem("todoList", JSON.stringify(state.tasks));
       }
-    } 
+    },
+
+
+    addStartDate : (state, action: PayloadAction<{ date: string; time: string}>) => {
+
+      const newTask = state.tasks.map(task => {
+        if(task.id == state.selectedTask?.id){
+          
+          const updateChecklist = {
+            ...task,
+            startDate : action.payload.date,
+            startTime : action.payload.time
+          }; 
+
+          // update selectedTask
+          state.selectedTask = updateChecklist;
+
+          // if task is selected task, then update task : add new checklist
+          return updateChecklist;
+        }
+
+        return {...task};
+      });
+
+
+      state.tasks = newTask;
+
+      localStorage.setItem("todoList", JSON.stringify(newTask))
+    }
   }
 })
 
-export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask, addList, addListItem, checkedListItem } = tasksSlice.actions
+export const { setTasks, addTask, updateTask, removeTask, setAddingToQuadrant, setSelectedTask, moveTask, addList, addListItem, checkedListItem, addStartDate } = tasksSlice.actions
 export default tasksSlice.reducer 
