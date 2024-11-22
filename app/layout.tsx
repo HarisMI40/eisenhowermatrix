@@ -37,7 +37,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#007bff" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-indigo-400 to-cyan-400`}
       >
           <div className="w-screen max-w-full mx-auto p-6 flex flex-col md:flex-row justify-around">
             {children}

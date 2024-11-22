@@ -19,7 +19,7 @@ const Index = () => {
       <h1 className="text-3xl font-serif text-center mb-8">The Eisenhower Matrix</h1>
       <div className="relative">
         <MatrixHeaders />
-        <div className="grid grid-cols-2 gap-0.5 border border-gray-200">
+        <div className="grid grid-cols-2 border border-gray-200">
           <MatrixQuadrant
             title="Do"
             description="Tasks that need immediate attention and have high importance."
