@@ -2,10 +2,9 @@ import { Button } from '@/components/ui/button';
 
 import { RootState } from '@/lib/store/store';
 
-import React, { KeyboardEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Lists from './Lists';
-import { addListItem, removeCheckList } from '@/lib/store/tasksSlice';
+import { removeCheckList } from '@/lib/store/tasksSlice';
 import FormChecklist from './FormChecklist';
 
 const Cheklists = () => {
