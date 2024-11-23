@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import React, { KeyboardEvent, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Lists from './Lists';
-import { addListItem } from '@/lib/store/tasksSlice';
+import { addListItem, removeCheckList } from '@/lib/store/tasksSlice';
 
 const Cheklists = () => {
   const selectedTask = useSelector((state:RootState) => state.tasks.selectedTask);
@@ -45,13 +45,20 @@ const Cheklists = () => {
     }
   }
 
+    const removeCheckListHandler = (checklistId : string) => {
+      if(!selectedTask?.id){
+        return;
+      }
+      dispatch(removeCheckList({taskId :selectedTask?.id, checklistId}));
+    }
+
 
   return (
     selectedTask?.checkList.map(checklist => (
       <div className="space-y-2" key={checklist.id}>
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium">{checklist.title}</h3>
-          {/* <Button variant="outline" size="sm" onClick={() => deleteListHandler(checklist.id)}>Delete</Button> */}
+          <Button variant="outline" size="sm" onClick={() => removeCheckListHandler(checklist.id)}>Delete</Button>
         </div>
         <div className="space-y-2">
           <Lists taskId={selectedTask?.id}  id={checklist.id} list={checklist.item}/>
