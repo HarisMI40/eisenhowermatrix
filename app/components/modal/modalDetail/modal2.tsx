@@ -17,6 +17,7 @@ import Description from './components/Description'
 import Cheklists from './components/Checklist/Cheklists'
 import Dates from './components/Dates'
 import DueDateDisplay from './components/DateDisplay'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 const Modal = () => {
 
@@ -65,7 +66,8 @@ const Modal = () => {
           </div>
 
           {/* Content */}
-          <div className="flex flex-1 overflow-hidden">
+          <ScrollArea>
+          <div className="flex flex-1">
             {/* Main Content */}
             <div className="flex-1 p-4">
               <div className="space-y-6">
@@ -117,7 +119,8 @@ const Modal = () => {
 
               <Dates />
             </div>
-          </div>
+            </div>
+          </ScrollArea>
         </div>
       </DialogContent>
     </Dialog>
