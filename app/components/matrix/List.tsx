@@ -3,32 +3,12 @@ import { useDispatch } from 'react-redux'
 import { setSelectedTask } from '@/lib/store/tasksSlice'
 import { Card } from "@/components/ui/card"
 import TaskMenu from "./TaskMenu"
-import { differenceInDays, format } from "date-fns"
-import { Clock } from "lucide-react"
+import CheckCompleted from "./List/CheckCompleted"
+import RemainingDay from "./List/RemainingDay"
+import StartDate from "./List/StartDate"
 
 const List = ({ filteredTasks }: { filteredTasks: Task[] }) => {
   const dispatch = useDispatch();
-
-  const showRemainingDay = (startDate: string) => {
-    const remainingDay = differenceInDays(startDate, new Date());
-    let bgColor = "";
-
-    if (remainingDay > 4) {
-      bgColor = "bg-green-500";
-    }
-    else if (remainingDay > 0 && remainingDay < 4 ) {
-      bgColor = "bg-orange-500";
-    }
-    else {
-      bgColor = "bg-red-500";
-    }
-
-    return (
-      <span className={`text-xs px-1 ml-2 font-semibold ${bgColor} rounded`}>
-        {`${remainingDay} days remaining`}
-      </span>
-    );
-  };
 
   return (
     <ul className="list-none space-y-2">
@@ -45,13 +25,12 @@ const List = ({ filteredTasks }: { filteredTasks: Task[] }) => {
                   <p className="text-sm">{task.text}</p>
                 </div>
                 {task.startDate && (
-                  <div className="flex gap-3">
-
-                    <div className="text-xs text-black px-1 rounded bg-gray-200 w-max flex gap-1 items-center">
-                      <Clock size={12} /> {format(task.startDate, "dd MMM yyyy")}
+                  <div className="flex justify-between">
+                    <div className="flex gap-3">
+                      <StartDate startDate={task.startDate} />
+                      <CheckCompleted item={task.checkList} />
                     </div>
-
-                    {showRemainingDay(task.startDate)}
+                    <RemainingDay startDate={task.startDate} />
                   </div>
                 )}
               </div>

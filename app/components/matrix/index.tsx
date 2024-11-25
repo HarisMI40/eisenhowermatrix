@@ -15,7 +15,7 @@ const Index = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full md:w-6/12">
+    <div className="w-full md:w-8/12">
       <div className="text-center text-white space-y-2 mb-8">
         <h1 className="text-4xl font-serif">The Eisenhower Matrix</h1>
         <p className="text-sm">Prioritize tasks based on urgency and importance</p>
