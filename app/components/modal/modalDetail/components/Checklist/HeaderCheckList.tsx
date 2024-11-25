@@ -5,7 +5,7 @@ import { itemList } from '@/lib/types'
 import { useDispatch } from 'react-redux'
 import { removeCheckList } from '@/lib/store/tasksSlice'
 
-const HeaderCheckList = ({taskId, checkListId, title, item} : {taskId : number, checkListId : string, title : string, item : itemList[]}) => {
+const HeaderCheckList = ({ taskId, checkListId, title, item }: { taskId: number, checkListId: string, title: string, item: itemList[] }) => {
 
   const dispatch = useDispatch();
 
@@ -13,19 +13,19 @@ const HeaderCheckList = ({taskId, checkListId, title, item} : {taskId : number, 
     if (!taskId) {
       return;
     }
-    dispatch(removeCheckList({ taskId,  checklistId}));
+    dispatch(removeCheckList({ taskId, checklistId }));
   }
 
 
   return (
     <>
-    <div className="flex items-center justify-between">
-            <h3 className="text-sm font-medium">{title}</h3>
-            <Button variant="outline" size="sm" onClick={() => removeCheckListHandler(checkListId)}>Delete</Button>
-          </div>
-          <div className='text-xs'>
-            <ListNumber item={item} />
-          </div>
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-medium">{title}</h3>
+        <Button variant="outline" size="sm" onClick={() => removeCheckListHandler(checkListId)}>Delete</Button>
+      </div>
+      <div className='text-xs'>
+        <ListNumber item={item} />
+      </div>
     </>
   )
 }
